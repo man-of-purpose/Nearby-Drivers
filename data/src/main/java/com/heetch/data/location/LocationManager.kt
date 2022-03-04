@@ -1,11 +1,9 @@
 package com.heetch.data.location
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import com.heetch.presentation.util.RxPicasso
 import io.reactivex.Observable
 
 class LocationManager(private val context: Context) : MapSnapshotRetriever, AddressRetriever {
@@ -17,9 +15,8 @@ class LocationManager(private val context: Context) : MapSnapshotRetriever, Addr
             "https%3A%2F%2Fs3-eu-west-1.amazonaws.com%2Fheetch-production%2Fassets%2Fproducts%2Fcar-image-lepro.png"
     }
 
-    override fun retrieveSnapshot(latitude: Double, longitude: Double): Observable<Bitmap> {
-        val url = generateSnapshotUrl(latitude, longitude)
-        return RxPicasso().loadImage(url)
+    override fun retrieveSnapshotUrl(latitude: Double, longitude: Double): String {
+        return generateSnapshotUrl(latitude, longitude)
     }
 
     override fun generateSnapshotUrl(latitude: Double, longitude: Double): String {

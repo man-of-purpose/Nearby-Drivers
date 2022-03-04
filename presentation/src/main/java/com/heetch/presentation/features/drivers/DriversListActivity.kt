@@ -1,4 +1,4 @@
-package com.heetch.presentation.features.driverslist
+package com.heetch.presentation.features.drivers
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,8 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.heetch.technicaltest.R
-import com.heetch.technicaltest.location.LocationManager
+import com.heetch.presentation.R
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
@@ -26,14 +25,14 @@ class DriversListActivity : AppCompatActivity() {
     private val permissions =
         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private val compositeDisposable = CompositeDisposable()
-    private lateinit var locationManager: LocationManager
+   // private lateinit var locationManager: LocationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drivers)
         setSupportActionBar(drivers_toolbar)
 
-        locationManager = LocationManager(this)
+       // locationManager = LocationManager(this)
         compositeDisposable.add(subscribeToFabClick())
     }
 

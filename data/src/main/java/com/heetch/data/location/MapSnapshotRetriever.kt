@@ -5,7 +5,7 @@ import io.reactivex.Observable
 
 interface MapSnapshotRetriever {
 
-    fun retrieveSnapshot(latitude: Double, longitude: Double) : Observable<Bitmap>
+    fun retrieveSnapshotUrl(latitude: Double, longitude: Double) : String
 
     fun generateSnapshotUrl(latitude: Double, longitude: Double): String
 

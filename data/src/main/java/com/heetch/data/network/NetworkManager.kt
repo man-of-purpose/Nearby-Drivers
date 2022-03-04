@@ -3,7 +3,8 @@ package com.heetch.data.network
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.heetch.technicaltest.BuildConfig
+import com.heetch.data.BuildConfig
+import com.heetch.data.api.drivers.DriversApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +18,7 @@ class NetworkManager {
         const val BASE_URL = "http://hiring.heetch.com/mobile/"
     }
 
-    fun getRepository() : ApiInterface {
+    fun getRepository() : DriversApiInterface {
         val loggingInterceptor = provideLoggingInterceptor()
         val httpClient = provideLoggingCapableHttpClient(loggingInterceptor)
         val gson = provideGsonConverter()
@@ -59,10 +60,10 @@ class NetworkManager {
             .client(okHttpClient)
     }
 
-    private fun provideRestService(retrofitBuilder: Retrofit.Builder, baseUrl: String): ApiInterface {
+    private fun provideRestService(retrofitBuilder: Retrofit.Builder, baseUrl: String): DriversApiInterface {
         return retrofitBuilder.baseUrl(baseUrl)
             .build()
-            .create(ApiInterface::class.java)
+            .create(DriversApiInterface::class.java)
     }
 
     private fun provideGsonConverter(): Gson {

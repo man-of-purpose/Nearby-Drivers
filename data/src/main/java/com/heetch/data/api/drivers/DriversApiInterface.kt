@@ -1,10 +1,12 @@
-package com.heetch.data.repository.drivers
+package com.heetch.data.api.drivers
 
+import com.heetch.data.entity.drivers.CoordinatesBody
+import com.heetch.data.entity.drivers.DriverRemoteModel
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.PUT
 
-interface ApiInterface {
+interface DriversApiInterface {
 
     @PUT("coordinates")
     fun getCoordinates(@Body coordinatesBody: CoordinatesBody): Single<List<DriverRemoteModel>>
