@@ -18,7 +18,7 @@ class NetworkManager {
         const val BASE_URL = "http://hiring.heetch.com/mobile/"
     }
 
-    fun getRepository() : DriversApiInterface {
+    fun provideDriversApiService() : DriversApiInterface {
         val loggingInterceptor = provideLoggingInterceptor()
         val httpClient = provideLoggingCapableHttpClient(loggingInterceptor)
         val gson = provideGsonConverter()
