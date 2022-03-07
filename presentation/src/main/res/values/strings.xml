@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="driver_image_base_url">http://hiring.heetch.com</string>
+    <string name="user_address_label">Your current address</string>
+</resources>
