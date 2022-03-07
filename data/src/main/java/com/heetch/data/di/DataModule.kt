@@ -3,9 +3,12 @@ package com.heetch.data.di
 import com.google.gson.GsonBuilder
 import com.heetch.data.BuildConfig
 import com.heetch.data.api.drivers.DriversApiInterface
+import com.heetch.data.location.LocationManager
 import com.heetch.data.network.Constants
 import com.heetch.data.network.NetworkManager
+import com.heetch.data.repository.drivers.AddressRepositoryImpl
 import com.heetch.data.repository.drivers.DriversRepositoryImpl
+import com.heetch.domain.repository.drivers.AddressRepository
 import com.heetch.domain.repository.drivers.DriversRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,6 +25,9 @@ import java.util.concurrent.TimeUnit
 
 @OptIn(KoinApiExtension::class)
 val dataModule: Module = module(override = true) {
+
+    // Location modules
+    single { LocationManager(androidContext()) }
 
     // Networking modules
     single {
@@ -61,7 +67,10 @@ val dataModule: Module = module(override = true) {
 
     // Repository modules
     single<DriversRepository> {
-        DriversRepositoryImpl(get())
+        DriversRepositoryImpl(get(), get())
+    }
+    single<AddressRepository> {
+        AddressRepositoryImpl(get())
     }
 
 }

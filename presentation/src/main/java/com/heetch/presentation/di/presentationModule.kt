@@ -10,6 +10,6 @@ import org.koin.dsl.module
 val presentationModule: Module = module(override = true) {
 
     // ViewModel modules
-    viewModel { DriversListViewModel(get()) }
+    viewModel { DriversListViewModel(get(), get()) }
 
 }

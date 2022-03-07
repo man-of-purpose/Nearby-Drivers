@@ -1,5 +1,6 @@
 package com.heetch.domain.di
 
+import com.heetch.domain.usecase.drivers.GetAddressFromLocationUseCase
 import com.heetch.domain.usecase.drivers.GetNearbyDriversUseCase
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.module.Module
@@ -10,5 +11,6 @@ val domainModule: Module = module(override = true) {
 
     // UseCase modules
     single { GetNearbyDriversUseCase(get()) }
+    single { GetAddressFromLocationUseCase(get()) }
 
 }

@@ -4,10 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
-import android.widget.Toast
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.heetch.presentation.R
+import com.heetch.presentation.databinding.ActivityDriversBinding
+import com.heetch.presentation.util.loadImagefromUrl
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
@@ -19,64 +19,68 @@ import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 
 class DriversListActivity : AppCompatActivity() {
 
-    companion object {
-        const val LOG_TAG = "DriversListActivity"
-    }
-
     private val driversListViewModel: DriversListViewModel by inject()
     private lateinit var driverListAdapter: DriversListAdapter
+    private lateinit var binding: ActivityDriversBinding
     private val permissions =
         arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
-    private val compositeDisposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_drivers)
+
+        binding = ActivityDriversBinding.inflate(LayoutInflater.from(this@DriversListActivity))
+        setupUI()
+        observeViewStates()
+    }
+
+    private fun setupUI() {
+        setContentView(binding.root)
         setSupportActionBar(drivers_toolbar)
         setupDriverListAdapter()
-
-        compositeDisposable.add(subscribeToFabClick())
-        observeViewStates()
+        disposable.add(subscribeToFabClick())
     }
 
     private fun setupDriverListAdapter() {
         driverListAdapter = DriversListAdapter()
-        driversRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@DriversListActivity)
-            adapter = driverListAdapter
-        }
+        binding.driversRecyclerView.adapter = driverListAdapter
     }
 
     private fun observeViewStates() = with(driversListViewModel) {
         drivers.observe(this@DriversListActivity) { drivers ->
-            Toast.makeText(this@DriversListActivity, "Play!", Toast.LENGTH_SHORT).show()
             driverListAdapter.updateDriversList(drivers)
         }
 
-        loading.observe(this@DriversListActivity) { isLoading ->
+        isLoading.observe(this@DriversListActivity) { isLoading ->
+            binding.isLoading = isLoading
+        }
 
+        isStreamingDrivers.observe(this@DriversListActivity) { isStreamingDrivers ->
+            binding.isStreamingDrivers = isStreamingDrivers
+        }
+
+        userAddress.observe(this@DriversListActivity) { userAddress ->
+            binding.userAddress = userAddress
+            binding.addressSnapshot.loadImagefromUrl(userAddress.snapshotURL)
         }
     }
 
     private fun subscribeToFabClick(): Disposable {
-        return drivers_fab.clicks()
-            .doOnNext { Toast.makeText(this, "Play!", Toast.LENGTH_SHORT).show() }
-            .flatMap {
-                checkPermissions()
-                    .flatMap { getUserLocation() }
-                    .doOnNext { userLocation ->
-                        driversListViewModel.getNearbyDrivers(userLocation)
-                    }
+        return binding.driversFab.clicks()
+            .subscribe {
+                disposable.add(checkPermissionsThenStreamNearbyDrivers())
             }
-            .subscribe()
     }
 
-    override fun onDestroy() {
-        compositeDisposable.dispose()
-        super.onDestroy()
+    private fun checkPermissionsThenStreamNearbyDrivers(): Disposable {
+        return checkPermissions()
+            .flatMap { getUserLocation() }
+            .subscribe { userLocation ->
+                driversListViewModel.toggleNearbyDriversStream(userLocation)
+            }
     }
 
     private fun checkPermissions(): Observable<Boolean> {
@@ -88,4 +92,9 @@ class DriversListActivity : AppCompatActivity() {
         return ReactiveLocationProvider(this).lastKnownLocation
     }
 
+    override fun onDestroy() {
+        disposable.dispose()
+        driversListViewModel.dispose()
+        super.onDestroy()
+    }
 }

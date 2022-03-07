@@ -4,8 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.heetch.domain.entity.drivers.DriverDomainModel
+import com.heetch.presentation.R
 import com.heetch.presentation.databinding.DriverItemBinding
 import com.heetch.presentation.util.RxPicasso
+import com.heetch.presentation.util.loadImagefromUrl
+import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class DriversListAdapter : RecyclerView.Adapter<DriversListAdapter.DriversListViewHolder>() {
     private var driverModels: List<DriverDomainModel> = listOf()
@@ -16,10 +21,12 @@ class DriversListAdapter : RecyclerView.Adapter<DriversListAdapter.DriversListVi
     }
 
     inner class DriversListViewHolder(val driverItem: DriverItemBinding) : RecyclerView.ViewHolder(driverItem.root) {
-        fun bind(driverModel: DriverDomainModel) {
+
+        fun bind(driverModel: DriverDomainModel) = with(driverItem.root.context) {
             driverItem.driver = driverModel
-            RxPicasso().loadImage(driverModel.image)
-                .subscribe { driverItem.driverImage.setImageBitmap(it) }.dispose()
+
+            val driverImageURL = getString(R.string.driver_image_base_url) + driverModel.image
+            driverItem.driverImage.loadImagefromUrl(driverImageURL)
         }
     }
 

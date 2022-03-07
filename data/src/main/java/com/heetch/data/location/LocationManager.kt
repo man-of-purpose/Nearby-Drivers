@@ -4,6 +4,8 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import com.heetch.data.entity.drivers.AddressRemoteModel
+import com.heetch.data.network.Constants
 import io.reactivex.Observable
 
 class LocationManager(private val context: Context) : MapSnapshotRetriever, AddressRetriever {
@@ -40,8 +42,29 @@ class LocationManager(private val context: Context) : MapSnapshotRetriever, Addr
         }
     }
 
-    fun getDistance(from: Location, to: Location) : Float {
+    fun getDistance(from: Location, to: Location): Float {
         return from.distanceTo(to)
+    }
+
+    fun getAddressFromCoordinates(
+        latitude: Double,
+        longitude: Double
+    ): Observable<AddressRemoteModel> {
+        val snapshotURL = retrieveSnapshotUrl(latitude, longitude)
+        val geocode = geocode(latitude, longitude)
+
+        return geocode.map {
+            val addressLine = it.getAddressLine(0) ?: Constants.ADDRESS_UNAVAILABLE
+            AddressRemoteModel(addressLine, snapshotURL)
+        }
+    }
+
+    fun coordinatesToLocation(latitude: Double, longitude: Double): Location {
+        val location = Location("")
+        location.latitude = latitude
+        location.longitude = longitude
+
+        return location
     }
 
 }
