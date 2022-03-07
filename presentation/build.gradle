@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdk 31
+    android.buildFeatures.dataBinding = true
+    android.buildFeatures.viewBinding = true
 
     defaultConfig {
         minSdk 21
