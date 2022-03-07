@@ -12,6 +12,7 @@ class DriversListAdapter : RecyclerView.Adapter<DriversListAdapter.DriversListVi
 
     fun updateDriversList(driverModels: List<DriverDomainModel>) {
         this@DriversListAdapter.driverModels = driverModels
+        notifyDataSetChanged()
     }
 
     inner class DriversListViewHolder(val driverItem: DriverItemBinding) : RecyclerView.ViewHolder(driverItem.root) {

@@ -1,9 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 31
+    android.buildFeatures.dataBinding = true
+    android.buildFeatures.viewBinding = true
     defaultConfig {
         applicationId "com.heetch.technicaltest"
         minSdkVersion 21

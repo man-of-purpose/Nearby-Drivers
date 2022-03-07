@@ -8,11 +8,14 @@ import com.heetch.domain.entity.drivers.DriverDomainModel
 import com.heetch.domain.usecase.drivers.GetNearbyDriversParams
 import com.heetch.domain.usecase.drivers.GetNearbyDriversUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.component.KoinComponent
 
 class DriversListViewModel constructor(
     private val getNearbyDriversUseCase: GetNearbyDriversUseCase
 ) : ViewModel(), KoinComponent {
+
+    private val compositeDisposable = CompositeDisposable()
 
     private var mutableDrivers: MutableLiveData<List<DriverDomainModel>> = MutableLiveData()
     val drivers: LiveData<List<DriverDomainModel>> = mutableDrivers
@@ -20,7 +23,8 @@ class DriversListViewModel constructor(
     val loading: LiveData<Boolean> = mutableLoading
 
     fun getNearbyDrivers(myLocation: Location) {
-        getNearbyDriversUseCase(
+        compositeDisposable.add(
+            getNearbyDriversUseCase(
             GetNearbyDriversParams(
                 myLocation.latitude,
                 myLocation.longitude
@@ -33,6 +37,6 @@ class DriversListViewModel constructor(
                 mutableDrivers.value = drivers
                 mutableLoading.value = false
             }, {})
-            .dispose()
+        )
     }
 }

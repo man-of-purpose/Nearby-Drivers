@@ -52,6 +52,7 @@ class DriversListActivity : AppCompatActivity() {
 
     private fun observeViewStates() = with(driversListViewModel) {
         drivers.observe(this@DriversListActivity) { drivers ->
+            Toast.makeText(this@DriversListActivity, "Play!", Toast.LENGTH_SHORT).show()
             driverListAdapter.updateDriversList(drivers)
         }
 
