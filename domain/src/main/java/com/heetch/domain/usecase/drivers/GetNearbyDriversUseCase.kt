@@ -12,6 +12,7 @@ class GetNearbyDriversUseCase constructor(
     override fun invoke(params: GetNearbyDriversParams): Single<List<DriverDomainModel>> {
         return driversRepository.getNearbyDrivers(params.latitude, params.longitude)
             .subscribeOn(Schedulers.io())
+            .retry()
     }
 }
 
