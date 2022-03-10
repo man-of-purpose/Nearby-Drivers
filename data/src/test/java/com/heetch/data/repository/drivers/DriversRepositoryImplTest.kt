@@ -1,6 +1,6 @@
 package com.heetch.data.repository.drivers
 
-import com.heetch.data.TestConstants
+import com.heetch.domain.TestConstants
 import com.heetch.data.api.drivers.DriversApiInterface
 import com.heetch.data.entity.drivers.Coordinates
 import com.heetch.data.entity.drivers.CoordinatesBody
