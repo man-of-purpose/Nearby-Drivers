@@ -65,13 +65,14 @@
                     android:src="@drawable/location" />
 
                 <TextView
-                    android:id="@+id/yourCurrentAddressLabel"
+                    android:id="@+id/your_current_address_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_address_label"
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/user_display_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

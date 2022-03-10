@@ -88,7 +88,10 @@ class DriversListActivity : AppCompatActivity() {
         return checkPermissions()
             .flatMap { getUserLocation() }
             .subscribe { userLocation ->
-                driversListViewModel.toggleNearbyDriversStream(userLocation)
+                driversListViewModel.toggleNearbyDriversStream(
+                    userLocation.latitude,
+                    userLocation.longitude
+                )
             }
     }
 
