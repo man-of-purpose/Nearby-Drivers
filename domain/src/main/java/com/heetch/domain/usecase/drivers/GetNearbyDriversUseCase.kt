@@ -9,10 +9,11 @@ import io.reactivex.schedulers.Schedulers
 class GetNearbyDriversUseCase constructor(
     private val driversRepository: DriversRepository
 ) : SingleUseCase<List<DriverDomainModel>, GetNearbyDriversParams> {
+
     override fun invoke(params: GetNearbyDriversParams): Single<List<DriverDomainModel>> {
         return driversRepository.getNearbyDrivers(params.latitude, params.longitude)
             .subscribeOn(Schedulers.io())
-            .retry()
+            .retry() // retry all failed attempts since the behaviour requires drivers to be continuously streamed
     }
 }
 

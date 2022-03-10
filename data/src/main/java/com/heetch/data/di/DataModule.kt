@@ -4,8 +4,7 @@ import com.google.gson.GsonBuilder
 import com.heetch.data.BuildConfig
 import com.heetch.data.api.drivers.DriversApiInterface
 import com.heetch.data.location.LocationManager
-import com.heetch.data.network.Constants
-import com.heetch.data.network.NetworkManager
+import com.heetch.data.Constants
 import com.heetch.data.repository.drivers.AddressRepositoryImpl
 import com.heetch.data.repository.drivers.DriversRepositoryImpl
 import com.heetch.domain.repository.drivers.AddressRepository
@@ -15,7 +14,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.module.Module
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -53,7 +51,7 @@ val dataModule: Module = module(override = true) {
         val callerAdapterFactory = RxJava2CallAdapterFactory.create()
 
         Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(callerAdapterFactory)
             .client(get())

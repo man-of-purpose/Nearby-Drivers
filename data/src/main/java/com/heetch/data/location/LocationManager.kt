@@ -5,7 +5,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import com.heetch.data.entity.drivers.AddressRemoteModel
-import com.heetch.data.network.Constants
+import com.heetch.data.Constants
 import io.reactivex.Observable
 
 class LocationManager(private val context: Context) : MapSnapshotRetriever, AddressRetriever {

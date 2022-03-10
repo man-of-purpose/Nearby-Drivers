@@ -1,6 +1,5 @@
-package com.heetch.presentation.features.drivers
+package com.heetch.presentation.features.drivers.viewmodel
 
-import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -37,49 +36,44 @@ class DriversListViewModel constructor(
     private lateinit var nearbyDriversSubscription: Disposable
     private lateinit var userAddressSubscription: Disposable
 
-    fun toggleNearbyDriversStream(userLocation: Location) {
+    fun toggleNearbyDriversStream(userLatitude: Double, userLongitude: Double) {
         val isStreaming = isStreamingDrivers.value ?: false
 
         if (isStreaming) {
             stopStreamingNearbyDrivers()
         } else {
-            startStreamingNearbyDrivers(userLocation)
+            startStreamingNearbyDrivers(userLatitude, userLongitude)
         }
     }
 
-    private fun startStreamingNearbyDrivers(userLocation: Location) {
+    private fun startStreamingNearbyDrivers(userLatitude: Double, userLongitude: Double) {
         val driversSubscriber = Consumer<List<DriverDomainModel>> { drivers ->
             mutableDrivers.value = drivers
             mutableIsLoading.value = false
             mutableIsStreamingDrivers.value = true
         }
 
-        nearbyDriversSubscription = getNearbyDriversUseCase(
-            GetNearbyDriversParams(
-                userLocation.latitude,
-                userLocation.longitude
-            )
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { mutableIsLoading.value = true }
-            .doOnSuccess {
-                mutableIsLoading.value = false
-                resolveUserAddressFromGeoLocation(userLocation)
-            }
-            .doOnError { mutableIsLoading.value = false }
-            .repeatWhen {
-                it.delay(NumberConstants.FIVE, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-            }
-            .subscribe(driversSubscriber)
+        nearbyDriversSubscription = getNearbyDriversUseCase(GetNearbyDriversParams(userLatitude, userLongitude))
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { mutableIsLoading.value = true }
+                .doOnSuccess {
+                    mutableIsLoading.value = false
+                    resolveUserAddressFromGeoLocation(userLatitude, userLongitude)
+                }
+                .doOnError { mutableIsLoading.value = false }
+                .repeatWhen {
+                    it.delay(NumberConstants.FIVE, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                }
+                .subscribe(driversSubscriber)
 
     }
 
-    private fun resolveUserAddressFromGeoLocation(userLocation: Location) {
+    private fun resolveUserAddressFromGeoLocation(userLatitude: Double, userLongitude: Double) {
         userAddressSubscription = getAddressFromLocationUseCase.invoke(
             GetAddressFromLocationParams(
-                userLocation.latitude,
-                userLocation.longitude
+                userLatitude,
+                userLongitude
             )
         )
             .observeOn(AndroidSchedulers.mainThread())

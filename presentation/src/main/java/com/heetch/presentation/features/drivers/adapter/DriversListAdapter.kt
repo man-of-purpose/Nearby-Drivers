@@ -1,20 +1,18 @@
-package com.heetch.presentation.features.drivers
+package com.heetch.presentation.features.drivers.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.heetch.domain.entity.drivers.DriverDomainModel
 import com.heetch.presentation.R
 import com.heetch.presentation.databinding.DriverItemBinding
-import com.heetch.presentation.util.RxPicasso
 import com.heetch.presentation.util.loadImagefromUrl
-import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class DriversListAdapter : RecyclerView.Adapter<DriversListAdapter.DriversListViewHolder>() {
     private var driverModels: List<DriverDomainModel> = listOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateDriversList(driverModels: List<DriverDomainModel>) {
         this@DriversListAdapter.driverModels = driverModels
         notifyDataSetChanged()
