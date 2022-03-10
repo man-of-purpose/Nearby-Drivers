@@ -51,7 +51,7 @@ val dataModule: Module = module(override = true) {
         val callerAdapterFactory = RxJava2CallAdapterFactory.create()
 
         Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(callerAdapterFactory)
             .client(get())

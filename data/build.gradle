@@ -16,7 +16,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://hiring.heetch.com/mobile/\"")
+        }
+
         release {
+            buildConfigField("String", "BASE_URL", "\"http://hiring.heetch.com/mobile/\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
