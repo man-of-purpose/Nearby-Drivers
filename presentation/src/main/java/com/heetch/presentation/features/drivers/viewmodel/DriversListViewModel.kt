@@ -1,4 +1,4 @@
-package com.heetch.presentation.features.drivers
+package com.heetch.presentation.features.drivers.viewmodel
 
 import android.location.Location
 import androidx.lifecycle.LiveData

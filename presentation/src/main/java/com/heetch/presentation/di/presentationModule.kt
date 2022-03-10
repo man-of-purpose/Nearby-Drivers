@@ -1,6 +1,6 @@
 package com.heetch.presentation.di
 
-import com.heetch.presentation.features.drivers.DriversListViewModel
+import com.heetch.presentation.features.drivers.viewmodel.DriversListViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.module.Module

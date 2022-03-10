@@ -16,7 +16,7 @@
             android:name=".application.HeetchApplication"
             android:usesCleartextTraffic="true">
         <activity
-                android:name="com.heetch.presentation.features.drivers.DriversListActivity"
+                android:name="com.heetch.presentation.features.drivers.activity.DriversListActivity"
                 android:label="@string/drivers_list_title"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:exported="true">

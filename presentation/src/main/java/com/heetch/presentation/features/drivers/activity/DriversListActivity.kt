@@ -1,4 +1,4 @@
-package com.heetch.presentation.features.drivers
+package com.heetch.presentation.features.drivers.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.heetch.presentation.databinding.ActivityDriversBinding
+import com.heetch.presentation.features.drivers.adapter.DriversListAdapter
+import com.heetch.presentation.features.drivers.viewmodel.DriversListViewModel
 import com.heetch.presentation.util.loadImagefromUrl
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
