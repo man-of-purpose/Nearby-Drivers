@@ -1,4 +1,4 @@
-package com.heetch.data.network
+package com.heetch.data
 
 object Constants {
     const val BASE_URL = "http://hiring.heetch.com/mobile/"
