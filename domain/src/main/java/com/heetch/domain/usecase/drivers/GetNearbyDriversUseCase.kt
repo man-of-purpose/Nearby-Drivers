@@ -13,7 +13,7 @@ class GetNearbyDriversUseCase constructor(
     override fun invoke(params: GetNearbyDriversParams): Single<List<DriverDomainModel>> {
         return driversRepository.getNearbyDrivers(params.latitude, params.longitude)
             .subscribeOn(Schedulers.io())
-            .retry() // Since expected behaviour is to stream nearby drivers, retry all failed requests
+            .retry() // retry all failed attempts since the behaviour requires drivers to be continuously streamed
     }
 }
 

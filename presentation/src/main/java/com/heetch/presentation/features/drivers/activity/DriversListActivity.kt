@@ -11,11 +11,11 @@ import com.heetch.presentation.features.drivers.adapter.DriversListAdapter
 import com.heetch.presentation.features.drivers.viewmodel.DriversListViewModel
 import com.heetch.presentation.util.loadImagefromUrl
 import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.widget.checkedChanges
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_drivers.*
 import org.koin.android.ext.android.inject
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 
@@ -41,9 +41,9 @@ class DriversListActivity : AppCompatActivity() {
 
     private fun setupUI() {
         setContentView(binding.root)
-        setSupportActionBar(drivers_toolbar)
         setupDriverListAdapter()
         disposable.add(subscribeToFabClick())
+        disposable.add(subscribeToPremiumSwitch())
     }
 
     private fun setupDriverListAdapter() {
@@ -68,6 +68,13 @@ class DriversListActivity : AppCompatActivity() {
             binding.userAddress = userAddress
             binding.addressSnapshot.loadImagefromUrl(userAddress.snapshotURL)
         }
+    }
+
+    private fun subscribeToPremiumSwitch(): Disposable = with(binding) {
+        return premiumSwitch.checkedChanges()
+            .subscribe {
+                isNotPremium = !isNotPremium
+            }
     }
 
     private fun subscribeToFabClick(): Disposable {
