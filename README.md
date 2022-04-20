@@ -1,10 +1,11 @@
-# Introduction 
-Hi! Here's a test that's meant to highlight the skills that we think are important here @Heetch.
-It's supposed to be quick and should not take you more than 5 hours to achieve. 
+# Introduction
+Hi! I worked on this technical test last month for a company called Heetch in France, and the test was to build an app that pulls the nearest Heetch drivers into a list view.
 
-We reevaluate it regularly, so if you have some feedback to share about it, we'd be more than happy to read it!
+However, they already hired someone else who had completed all stages of the interview before I did. Hence, they had to stop my interview process.
 
-# Technical Test Instructions
+I am submitting this as my Paconiq test because it was stated in the Payconiq technical assessment document that I can submit an already existing project/repo I worked on recently. Please see more details about the technical test below:
+
+# Technical Test Instructions (Word for word from my Heetch interview)
 As you'll see, the app right now doesn't do much. 
 But we have big ambitions about it: display a nice, ordered, up-to-date list of drivers (ok maybe not that big).
 
