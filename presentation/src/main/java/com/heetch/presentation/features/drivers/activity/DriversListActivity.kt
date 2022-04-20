@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.heetch.presentation.databinding.ActivityDriversBinding
 import com.heetch.presentation.features.drivers.adapter.DriversListAdapter
@@ -80,13 +81,34 @@ class DriversListActivity : AppCompatActivity() {
     private fun subscribeToFabClick(): Disposable {
         return binding.driversFab.clicks()
             .subscribe {
-                disposable.add(checkPermissionsThenStreamNearbyDrivers())
+                disposable.add(checkPermissionsThenGetUserLocation())
             }
     }
 
-    private fun checkPermissionsThenStreamNearbyDrivers(): Disposable {
+    private fun checkPermissionsThenGetUserLocation(): Disposable {
         return checkPermissions()
-            .flatMap { getUserLocation() }
+            .map { isPermissionsAccepted ->
+                if (isPermissionsAccepted) {
+                    getUserLocationThenStreamNearbyDrivers()
+                } else {
+                    toastPermissionError()
+                    Observable.empty<Any>()
+                }
+            }.subscribe()
+
+    }
+
+    private fun toastPermissionError() {
+        //Note: String below will be fetched from String resources. Not hardcoded as below
+        Toast.makeText(
+            this@DriversListActivity,
+            "You denied location permissions which are required to use NearbyDrivers app",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun getUserLocationThenStreamNearbyDrivers(): Disposable {
+        return getUserLocation()
             .subscribe { userLocation ->
                 driversListViewModel.toggleNearbyDriversStream(
                     userLocation.latitude,

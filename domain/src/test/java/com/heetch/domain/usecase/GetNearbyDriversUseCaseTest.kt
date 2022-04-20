@@ -9,6 +9,7 @@ import com.heetch.domain.usecase.drivers.GetNearbyDriversUseCase
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
 
@@ -50,7 +51,11 @@ class GetNearbyDriversUseCaseTest {
         val request = getNearbyDriversUseCase.invoke(
             GetNearbyDriversParams(TestConstants.latitude, TestConstants.longitude)
         )
+        request
+            .test()
+            .await()
+            .assertValue(listOf(sampleDriver(), sampleDriver()))
 
-        assert(request.map { it == listOf(sampleDriver(), sampleDriver()) }.blockingGet())
+       // assert(request.map { it == listOf(sampleDriver(), sampleDriver()) }.blockingGet())
     }
 }
