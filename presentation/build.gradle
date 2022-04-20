@@ -1,21 +1,22 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
     android.buildFeatures.dataBinding = true
     android.buildFeatures.viewBinding = true
+
     defaultConfig {
-        applicationId "com.heetch.technicaltest"
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        minSdk 21
+        targetSdk 31
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,10 +30,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":data")
     implementation project(":domain")
-    implementation project(":presentation")
 
     //androidx & compat
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -50,18 +48,28 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
 
+    //ui
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     // DI - KOIN
     var koinVersion = "2.2.2"
     implementation "io.insert-koin:koin-android:$koinVersion"
-    implementation "io.insert-koin:koin-androidx-scope:$koinVersion"
-    implementation "io.insert-koin:koin-androidx-viewmodel:$koinVersion"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:4.7.1"
+    implementation "io.insert-koin:koin-android-viewmodel:$koinVersion"
+    testImplementation "io.insert-koin:koin-test:$koinVersion"
+    androidTestImplementation "io.insert-koin:koin-test:$koinVersion"
 
     //tests
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.google.truth:truth:1.0.1'
+    testImplementation 'io.mockk:mockk:1.12.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'io.mockk:mockk-android:1.12.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+    androidTestImplementation 'androidx.test:runner:1.5.0-alpha01'
+    androidTestImplementation 'androidx.test:rules:1.4.1-alpha04'
+    androidTestImplementation 'androidx.test:core:1.4.0'
+    androidTestImplementation 'com.agoda.kakao:kakao:2.3.4'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    kaptAndroidTest 'androidx.databinding:databinding-compiler:7.1.2'
 }

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <variable
+            name="isStreamingDrivers"
+            type="boolean" />
+
+        <variable
+            name="isNotPremium"
+            type="boolean" />
+
+        <variable
+            name="userAddress"
+            type="com.heetch.domain.entity.drivers.AddressDomainModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.heetch.presentation.features.drivers.activity.DriversListActivity">
+
+
+        <ImageView
+            android:id="@+id/address_snapshot"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:background="@color/lightGrey"
+            android:paddingBottom="2dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/user_address_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:shadowColor="@color/colorPrimary"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/address_snapshot">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/location" />
+
+                <TextView
+                    android:id="@+id/your_current_address_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_address_label"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/user_display_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{userAddress.address}"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/address_snapshot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_address_card" />
+
+        <ImageView
+            android:id="@+id/premium_belt"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@color/colorPrimary"
+            android:visibility="@{isNotPremium ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/address_snapshot" />
+
+
+        <TextView
+            android:id="@+id/nearby_drivers_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:text="@string/nearest_drivers_title"
+            android:textColor="@{isNotPremium ? @android:color/black : @color/colorPrimary}"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/premium_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/premium_switch" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
+            android:text="@string/premium_mode_active"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:visibility="@{isNotPremium ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/address_snapshot"
+            app:layout_constraintEnd_toEndOf="@id/address_snapshot" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/premium_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/address_snapshot" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/driversRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nearby_drivers_title" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/drivers_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:alpha="@{isLoading ? 0.6f : 1.0f}"
+            android:enabled="@{!isLoading}"
+            android:src="@{isLoading || isStreamingDrivers ? @drawable/ic_pause_black_24dp : @drawable/ic_play_arrow_black_24dp}"
+            android:tint="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
