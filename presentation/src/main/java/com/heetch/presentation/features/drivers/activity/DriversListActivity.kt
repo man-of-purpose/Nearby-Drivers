@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.heetch.presentation.R
 import com.heetch.presentation.databinding.ActivityDriversBinding
 import com.heetch.presentation.features.drivers.adapter.DriversListAdapter
 import com.heetch.presentation.features.drivers.viewmodel.DriversListViewModel
@@ -99,10 +100,9 @@ class DriversListActivity : AppCompatActivity() {
     }
 
     private fun toastPermissionError() {
-        //Note: String below will be fetched from String resources. Not hardcoded as below
         Toast.makeText(
             this@DriversListActivity,
-            "You denied location permissions which are required to use NearbyDrivers app",
+            getString(R.string.location_permission_error),
             Toast.LENGTH_LONG
         ).show()
     }

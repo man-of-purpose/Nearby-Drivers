@@ -4,4 +4,5 @@
     <string name="user_address_label">Your current address</string>
     <string name="nearest_drivers_title">Nearby Drivers</string>
     <string name="premium_mode_active">Premium mode active</string>
+    <string name="location_permission_error">You denied location permissions which are required to use NearbyDrivers app</string>
 </resources>

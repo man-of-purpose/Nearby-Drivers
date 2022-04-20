@@ -32,16 +32,18 @@
 
         <ImageView
             android:id="@+id/address_snapshot"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="300dp"
-            android:paddingBottom="2dp"
             android:background="@color/lightGrey"
+            android:paddingBottom="2dp"
             android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/user_address_card"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
             android:shadowColor="@color/colorPrimary"
@@ -49,6 +51,8 @@
             app:cardCornerRadius="15dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/address_snapshot">
 
             <LinearLayout
@@ -159,7 +163,6 @@
             android:layout_margin="16dp"
             android:alpha="@{isLoading ? 0.6f : 1.0f}"
             android:enabled="@{!isLoading}"
-            android:progress="20"
             android:src="@{isLoading || isStreamingDrivers ? @drawable/ic_pause_black_24dp : @drawable/ic_play_arrow_black_24dp}"
             android:tint="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
