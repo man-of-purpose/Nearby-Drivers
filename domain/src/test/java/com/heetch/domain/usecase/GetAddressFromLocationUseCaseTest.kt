@@ -41,6 +41,9 @@ class GetAddressFromLocationUseCaseTest {
             GetAddressFromLocationParams(TestConstants.latitude, TestConstants.longitude)
         )
 
-        assert(request.map { it == sampleAddress() }.blockingGet())
+        request
+            .test()
+            .await()
+            .assertValue(sampleAddress())
     }
 }

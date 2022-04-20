@@ -51,11 +51,10 @@ class GetNearbyDriversUseCaseTest {
         val request = getNearbyDriversUseCase.invoke(
             GetNearbyDriversParams(TestConstants.latitude, TestConstants.longitude)
         )
+
         request
             .test()
             .await()
             .assertValue(listOf(sampleDriver(), sampleDriver()))
-
-       // assert(request.map { it == listOf(sampleDriver(), sampleDriver()) }.blockingGet())
     }
 }

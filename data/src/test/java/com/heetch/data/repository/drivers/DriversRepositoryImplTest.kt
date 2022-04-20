@@ -53,10 +53,9 @@ class DriversRepositoryImplTest {
         val request =
             driversRepositoryImpl.getNearbyDrivers(TestConstants.latitude, TestConstants.longitude)
 
-        assert(
-            request.map {
-                it == listOf(sampleDriver().toDomainModel())
-            }.blockingGet()
-        )
+        request
+            .test()
+            .await()
+            .assertValue(listOf(sampleDriver().toDomainModel()))
     }
 }

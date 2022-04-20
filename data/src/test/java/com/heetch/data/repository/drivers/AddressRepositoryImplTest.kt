@@ -40,10 +40,9 @@ class AddressRepositoryImplTest {
             TestConstants.longitude
         )
 
-        assert(
-            request.map {
-                it == sampleAddress().toDomainModel()
-            }.blockingGet()
-        )
+        request
+            .test()
+            .await()
+            .assertValue(sampleAddress().toDomainModel())
     }
 }
