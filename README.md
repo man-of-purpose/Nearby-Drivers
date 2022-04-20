@@ -1,9 +1,15 @@
-# Introduction
-Hi! I worked on this technical test last month for a company called Heetch in France, and the test was to build an app that pulls the nearest Heetch drivers into a list view.
-
-However, they already hired someone else who had completed all stages of the interview before I did. Hence, they had to stop my interview process.
+# Introduction - Nearby Drivers app 🚘
+Hi! I worked on this technical test last month for a company called Heetch in France, and the primary task was to build an app that pulls the nearest Heetch drivers into a list view. However, they already hired someone else who had completed all stages of the interview before I did. Hence, they had to stop my interview process.
 
 I am submitting this as my Paconiq test because it was stated in the Payconiq technical assessment document that I can submit an already existing project/repo I worked on recently. Please see more details about the technical test below:
+
+# Frameworks and approaches
+- Layer modularization(Domain, data, and UI layer) ✅. For a larger project with teams assigned to specific features, I would prefer feature modularization.
+- Koin for dependency injection ✅
+- RxJava ✅
+- MVVM design pattern ✅
+- Retrofit for networking ✅
+- And other great frameworks ✅
 
 # Technical Test Instructions (Word for word from my Heetch interview)
 As you'll see, the app right now doesn't do much. 
@@ -41,10 +47,3 @@ If you want to make some extra points you can
 
 Those are not as important as the above requirements, so if you're running out of time, you should make sure to validate all the previous points before.
 
-
-### How to submit your work
-- Checkout the project 📥
-- Create a new branch for the implementation 🎋
-- Implement your version of the app 🚧
-- The code must be tested (unit tests) 🧞‍♂️
-- Open a Pull Request on this repository to submit your work 📤
